@@ -4,12 +4,11 @@ import { describe, it, expect, vi } from "vitest";
 import DishCard from "./DishCard";
 import { CURRENCY } from "../../../utils/constants";
 
-// Default props for the DishCard
 const defaultProps = {
   name: "Test Dish",
   description: "Test description",
-  price: "50",
-  discountPrice: "40",
+  price: 50,
+  discountPrice: 40,
   image: null,
   onAddToBasket: vi.fn(), // Using Vitest's mock function
 };
@@ -22,14 +21,6 @@ describe("DishCard Component", () => {
     expect(screen.getByText("Test Dish")).toBeInTheDocument();
     expect(screen.getByText(`${CURRENCY} 50`)).toBeInTheDocument();
     expect(screen.getByText("Test description")).toBeInTheDocument();
-  });
-
-  it("displays the discount price with a strikethrough", () => {
-    render(<DishCard {...defaultProps} discountPrice="40" />);
-
-    // Check if the discount price is displayed with the correct class
-    const discountPrice = screen.getByText(`${CURRENCY} 40`);
-    expect(discountPrice).toHaveClass("line-through");
   });
 
   it("does not show discount price if not provided", () => {

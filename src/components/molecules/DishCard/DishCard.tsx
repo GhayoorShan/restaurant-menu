@@ -5,8 +5,8 @@ import { CURRENCY } from "../../../utils/constants";
 type DishCardProps = {
   name: string;
   description?: string;
-  price: string;
-  discountPrice?: string;
+  price: number;
+  discountPrice?: number;
   image: string | null;
   onAddToBasket: () => void;
   isAvailable?: boolean;
@@ -35,12 +35,19 @@ const DishCard: React.FC<DishCardProps> = ({
           <p className="text-sm text-gray-500">{truncatedDescription}</p>
         )}
         <div className="flex gap-4 text-sm">
-          <p className="">
-            {CURRENCY} {price}
-          </p>{" "}
-          {discountPrice && (
-            <p className="text-muted line-through">
-              {CURRENCY} {discountPrice}
+          {discountPrice ? (
+            <>
+              <p>
+                {CURRENCY}
+                {price - price * discountPrice}
+              </p>
+              <p className="text-muted line-through">
+                {CURRENCY} {price}
+              </p>
+            </>
+          ) : (
+            <p>
+              {CURRENCY} {price}
             </p>
           )}
         </div>
