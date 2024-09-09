@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 type ButtonProps = {
   text?: string | null;
@@ -34,14 +33,6 @@ const Button: React.FC<ButtonProps> = ({
       {text && <span>{text}</span>}
     </button>
   );
-};
-
-Button.propTypes = {
-  text: PropTypes.string,
-  icon: PropTypes.node,
-  onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 export default Button;
