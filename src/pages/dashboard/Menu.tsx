@@ -7,11 +7,14 @@ import SearchField from "../../components/atoms/Search/SearchField";
 import { GoArrowLeft } from "react-icons/go";
 import useDebounce from "../../hooks/useDebounce";
 import MenuItem from "./MenuItem";
+import { clearBasket } from "../../redux/features/basket/basketSlice";
+import { useDispatch } from "react-redux";
 
 const Menu: React.FC = () => {
   const { data: menuData, error, loading } = useFetch<MenuData>(MENU_API_URL);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const debouncedQuery = useDebounce(searchQuery, 300);
+  const dispatch = useDispatch();
 
   if (error) return <div>Error: {error}</div>;
 
@@ -19,14 +22,16 @@ const Menu: React.FC = () => {
   const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(debouncedQuery.toLowerCase())
   );
+  console.log(localStorage.getItem("persist:basket"));
 
+  const handleReset = () => {
+    dispatch(clearBasket());
+    window.location.reload();
+  };
   return (
     <div className="px-5 py-12">
       <div className="flex flex-col items-start gap-2">
-        <Button
-          icon={<GoArrowLeft size={"35px"} />}
-          onClick={() => console.log("Back button clicked")}
-        />
+        <Button icon={<GoArrowLeft size={"35px"} />} onClick={handleReset} />
         <div className="text-[26px] font-semibold">Search</div>
         <SearchField query={searchQuery} onSearch={setSearchQuery} />
       </div>

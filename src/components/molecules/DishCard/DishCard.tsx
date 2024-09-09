@@ -9,7 +9,7 @@ type DishCardProps = {
   discountPrice?: number;
   image: string | null;
   onAddToBasket: () => void;
-  isAvailable?: boolean;
+  isOutOfStock?: boolean;
 };
 
 const DishCard: React.FC<DishCardProps> = ({
@@ -19,17 +19,16 @@ const DishCard: React.FC<DishCardProps> = ({
   discountPrice,
   image,
   onAddToBasket,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  isAvailable = true,
+  isOutOfStock = true,
 }) => {
   const truncatedDescription = useTruncate(description, 100);
 
   return (
     <div
       onClick={onAddToBasket}
-      className="flex justify-between space-x-4 cursor-pointer py-5 border-b border-borderColor"
+      className="flex justify-between space-x-4 cursor-pointer py-5 border-b border-borderColor relative"
     >
-      <div className="flex flex-col gap-2">
+      <div className=" flex flex-col gap-2">
         <h4 className="font-semibold text-primary">{name}</h4>
         {description && (
           <p className="text-sm text-gray-500">{truncatedDescription}</p>
@@ -38,8 +37,7 @@ const DishCard: React.FC<DishCardProps> = ({
           {discountPrice ? (
             <>
               <p>
-                {CURRENCY}
-                {price - price * discountPrice}
+                {CURRENCY} {price - price * discountPrice}
               </p>
               <p className="text-muted line-through">
                 {CURRENCY} {price}
@@ -57,6 +55,11 @@ const DishCard: React.FC<DishCardProps> = ({
         alt={name}
         className="w-24 h-24 rounded-md"
       />
+      {isOutOfStock && (
+        <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold py-1 px-2 rounded-md shadow-lg">
+          Out of Stock
+        </div>
+      )}
     </div>
   );
 };
