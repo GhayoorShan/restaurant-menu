@@ -10,6 +10,5 @@ export default defineConfig({
     globals: true, // Enables global test functions like `describe`, `it`, and `expect`
     environment: "jsdom", // Set the test environment to jsdom
     include: ["src/**/*.test.tsx", "src/**/*.spec.tsx"], // Include test files
-    // setupFiles: "./src/setupTests.ts", // Optional: Setup file for global configurations
   },
 });

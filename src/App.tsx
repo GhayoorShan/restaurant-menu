@@ -16,7 +16,7 @@ function App() {
   };
   return (
     <div className="px-5 py-12">
-      <Button icon={<FaArrowLeft />} onClick={handleBack} />
+      <Button icon={<FaArrowLeft />} onClick={handleBack} text={"uu"} />
       <div className="text-[26px] font-semibold">Search</div>
       <SearchField query={searchQuery} onSearch={handleSearch} />
     </div>
