@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       className={`
-        flex items-center justify-center gap-2 space-x-2 px-4 py-2 
+        flex items-center justify-center gap-2 
       text-black font-medium rounded-lg ${className}
       `}
     >

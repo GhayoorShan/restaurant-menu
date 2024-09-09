@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { IoIosSearch } from "react-icons/io";
 
 interface SearchFieldProps {
   query: string;
@@ -16,15 +16,15 @@ const SearchField: React.FC<SearchFieldProps> = ({ query, onSearch }) => {
   };
 
   return (
-    <div className="relative flex items-center">
+    <div className="relative flex items-center w-full">
+      <IoIosSearch className="absolute left-3 text-gray-400" />
       <input
         type="text"
         value={inputValue}
         onChange={handleChange}
         placeholder="Search for dishes..."
-        className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none"
+        className="pl-10 pr-4 py-2 border rounded-lg w-full focus:outline-none"
       />
-      <FaSearch className="absolute left-3 text-gray-500" />
     </div>
   );
 };
