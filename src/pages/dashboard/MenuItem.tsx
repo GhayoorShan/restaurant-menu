@@ -25,12 +25,7 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
     initialAvailableQuantity
   );
   const [isOutOfStock, setIsOutOfStock] = useState<boolean>(availability <= 0);
-  console.log(
-    basketItem?.id,
-    availability,
-    isOutOfStock,
-    basketItem?.maxQuantity
-  );
+
   useEffect(() => {
     setAvailability(initialAvailableQuantity);
     setIsOutOfStock(initialAvailableQuantity <= 0);

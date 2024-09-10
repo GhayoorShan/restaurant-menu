@@ -16,10 +16,8 @@ const Menu: React.FC = () => {
   const debouncedQuery = useDebounce(searchQuery, 300);
   const dispatch = useDispatch();
 
-  if (error) return <div>Error: {error}</div>;
+  const { items = [], categories = [] } = menuData || {};
 
-  const { items } = menuData || { items: [] };
-  console.log("items", items);
   const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(debouncedQuery.toLowerCase())
   );
@@ -37,7 +35,24 @@ const Menu: React.FC = () => {
       </div>
       <div>
         {!loading &&
-          filteredItems.map((item) => <MenuItem key={item.id} item={item} />)}
+          !error &&
+          categories.map((category) => {
+            // Filtering the items that belong to this specific category
+            const categoryItems = filteredItems.filter(
+              (item) => item.category_id === category.id
+            );
+            // Only rendering the category if it has items to display
+            return (
+              categoryItems.length > 0 && (
+                <div key={category.id} className="my-4">
+                  <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
+                  {categoryItems.map((item) => (
+                    <MenuItem key={item.id} item={item} />
+                  ))}
+                </div>
+              )
+            );
+          })}
       </div>
     </div>
   );
