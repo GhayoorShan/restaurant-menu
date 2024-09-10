@@ -20,12 +20,6 @@ describe("Button Component", () => {
     expect(iconElement).toBeInTheDocument();
   });
 
-  //   it("throws an error when neither text nor icon is provided", () => {
-  //     expect(() => {
-  //       render(<Button onClick={() => {}} />);
-  //     }).toThrowError("Button must have either text or icon.");
-  //   });
-
   it("calls onClick handler when clicked", () => {
     const handleClick = vi.fn();
     render(<Button text="Click Me" onClick={handleClick} />);

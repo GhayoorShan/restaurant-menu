@@ -28,6 +28,7 @@ export interface BasketItem {
   id: string;
   name: string;
   price: number;
-  quantity: number;
-  maxQuantity: number;
+  currentQuantity?: number; // The quantity of the item in the basket
+  availableQuantity?: number; // The remaining quantity available for the item
+  maxQuantity: number; // The initial availability of the item
 }

@@ -10,6 +10,7 @@ type DishCardProps = {
   image: string | null;
   onAddToBasket: () => void;
   isOutOfStock?: boolean;
+  currentQuantity?: number;
 };
 
 const DishCard: React.FC<DishCardProps> = ({
@@ -20,6 +21,7 @@ const DishCard: React.FC<DishCardProps> = ({
   image,
   onAddToBasket,
   isOutOfStock = true,
+  currentQuantity,
 }) => {
   const truncatedDescription = useTruncate(description, 100);
 
@@ -29,7 +31,10 @@ const DishCard: React.FC<DishCardProps> = ({
       className="flex justify-between space-x-4 cursor-pointer py-5 border-b border-borderColor relative"
     >
       <div className=" flex flex-col gap-2">
-        <h4 className="font-semibold text-primary">{name}</h4>
+        <h4 className="font-semibold text-primary">
+          {currentQuantity ? `${currentQuantity} X ` : ""}
+          {name}
+        </h4>
         {description && (
           <p className="text-sm text-gray-500">{truncatedDescription}</p>
         )}

@@ -18,28 +18,27 @@ const basketSlice = createSlice({
         (item) => item.id === action.payload.id
       );
 
-      if (existingItem && existingItem.quantity < action.payload.maxQuantity) {
-        existingItem.quantity += 1;
-      } else if (
-        existingItem &&
-        existingItem.quantity >= action.payload.maxQuantity
-      ) {
-        console.log("item exceed Max limit");
-      } else if (!existingItem) {
-        state.items.push(action.payload);
-      }
-    },
-    updateAvailability: (
-      state,
-      action: PayloadAction<{ id: string; quantity: number }>
-    ) => {
-      const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
-      );
       if (existingItem) {
-        existingItem.maxQuantity = action.payload.quantity;
+        if (
+          existingItem.currentQuantity !== undefined &&
+          existingItem.currentQuantity < existingItem.maxQuantity
+        ) {
+          existingItem.currentQuantity =
+            (existingItem.currentQuantity || 0) + 1;
+          existingItem.availableQuantity =
+            (existingItem.availableQuantity || 0) - 1;
+        } else {
+          console.log("Item exceeds max limit");
+        }
+      } else {
+        state.items.push({
+          ...action.payload,
+          currentQuantity: 1,
+          availableQuantity: action.payload.maxQuantity - 1,
+        });
       }
     },
+
     removeFromBasket: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
@@ -49,10 +48,6 @@ const basketSlice = createSlice({
   },
 });
 
-export const {
-  addToBasket,
-  updateAvailability,
-  removeFromBasket,
-  clearBasket,
-} = basketSlice.actions;
+export const { addToBasket, removeFromBasket, clearBasket } =
+  basketSlice.actions;
 export default basketSlice.reducer;
