@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
+import { vi } from "vitest";
 import MenuItem from "./MenuItem";
 import { Provider } from "react-redux";
 import { store } from "../../redux/store";

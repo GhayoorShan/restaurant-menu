@@ -4,6 +4,7 @@ import { Item } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { addToBasket } from "../../redux/features/basket/basketSlice";
+import useTruncate from "../../hooks/useTruncate";
 
 interface ItemCardProps {
   item: Item;
@@ -64,7 +65,7 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
         discountPrice={item.discount_rate}
         onAddToBasket={handleAddToBasket}
         image={item.photo || null}
-        description={item.description}
+        description={useTruncate(item.description, 100)}
         isOutOfStock={isOutOfStock}
         currentQuantity={basketItem?.currentQuantity ?? 0}
       />

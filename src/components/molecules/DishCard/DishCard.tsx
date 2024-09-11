@@ -1,5 +1,4 @@
 import React from "react";
-import useTruncate from "../../../hooks/useTruncate";
 import { CURRENCY } from "../../../utils/constants";
 
 type DishCardProps = {
@@ -23,8 +22,6 @@ const DishCard: React.FC<DishCardProps> = ({
   isOutOfStock = true,
   currentQuantity,
 }) => {
-  const truncatedDescription = useTruncate(description, 100);
-
   return (
     <div
       onClick={onAddToBasket}
@@ -35,9 +32,7 @@ const DishCard: React.FC<DishCardProps> = ({
           {currentQuantity ? `${currentQuantity} X ` : ""}
           {name}
         </h4>
-        {description && (
-          <p className="text-sm text-gray-500">{truncatedDescription}</p>
-        )}
+        {description && <p className="text-sm text-gray-500">{description}</p>}
         <div className="flex gap-4 text-sm">
           {discountPrice ? (
             <>

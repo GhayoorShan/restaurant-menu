@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
+import { vi } from "vitest";
 import DishCard from "./DishCard";
 import { CURRENCY } from "../../../utils/constants";
 
@@ -10,7 +9,7 @@ const defaultProps = {
   price: 50,
   discountPrice: 40,
   image: null,
-  onAddToBasket: vi.fn(), // Using Vitest's mock function
+  onAddToBasket: vi.fn(), // Using Vitest mock function
 };
 
 describe("DishCard Component", () => {

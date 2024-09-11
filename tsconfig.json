@@ -5,6 +5,6 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "types": ["vite/client", "@testing-library/jest-dom"]
+    "types": ["vitest/globals"] // This enables Vitest globals across the entire project
   }
 }

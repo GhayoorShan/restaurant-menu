@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
-import Button from "./Button"; // Adjust the import path as necessary
+import Button from "./Button";
+import { vi } from "vitest";
 
 describe("Button Component", () => {
   it("renders button with text", () => {
@@ -9,6 +8,7 @@ describe("Button Component", () => {
 
     const buttonElement = screen.getByText(/Click Me/i);
     expect(buttonElement).toBeInTheDocument();
+    screen.debug();
   });
 
   it("renders button with icon", () => {
