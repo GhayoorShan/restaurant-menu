@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import DishCard from "../../components/molecules/DishCard/DishCard";
 import { Item } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,13 +15,17 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
   const dispatch = useDispatch();
   const basketItems = useSelector((state: RootState) => state.basket.items);
 
-  const basketItem = basketItems.find(
-    (basketItem) => basketItem.id === item.id
+  // Memoizing basketItem lookup
+  const basketItem = useMemo(
+    () => basketItems.find((basketItem) => basketItem.id === item.id),
+    [basketItems, item.id]
   );
 
-  const initialAvailableQuantity = basketItem
-    ? (basketItem.availableQuantity ?? 0)
-    : (item?.stock?.availability ?? 0);
+  // Memoizing the initial available quantity
+  const initialAvailableQuantity = useMemo(
+    () => basketItem?.availableQuantity ?? item?.stock?.availability ?? 0,
+    [basketItem, item?.stock?.availability]
+  );
 
   const [availability, setAvailability] = useState<number>(
     initialAvailableQuantity
@@ -31,11 +35,12 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
   useEffect(() => {
     setAvailability(initialAvailableQuantity);
     setIsOutOfStock(initialAvailableQuantity <= 0);
-  }, [item, initialAvailableQuantity]);
+  }, [initialAvailableQuantity]);
 
-  const handleAddToBasket = () => {
+  // Memoizing the add to basket function
+  const handleAddToBasket = useCallback(() => {
+    // Dispatch action to add item to basket
     if (availability > 0) {
-      // Dispatch action to add item to basket
       dispatch(
         addToBasket({
           id: item.id,
@@ -56,7 +61,7 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
         return newAvailability;
       });
     }
-  };
+  }, [dispatch, availability, item]);
 
   return (
     <DishCard
