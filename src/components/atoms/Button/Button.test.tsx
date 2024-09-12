@@ -31,7 +31,7 @@ describe("Button Component", () => {
   });
 
   it("disables button when disabled prop is true", () => {
-    render(<Button text="Click me" onClick={() => {}} disabled={true} />);
+    render(<Button text="Click me" onClick={() => {}} disabled />);
     const button = screen.getByRole("button");
 
     // Check if button is disabled
