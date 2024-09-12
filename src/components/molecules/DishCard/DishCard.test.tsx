@@ -41,11 +41,11 @@ describe("DishCard Component", () => {
     expect(onAddToBasket).toHaveBeenCalledTimes(1);
   });
 
-  it("displays the placeholder image when no image is provided", () => {
+  it("displays nothing when no image is provided", () => {
     render(<DishCard {...defaultProps} image={null} />);
 
-    // Check if the placeholder image is displayed
-    const img = screen.getByAltText("Test Dish");
-    expect(img).toHaveAttribute("src", "https://via.placeholder.com/100");
+    // Check if no img element is rendered
+    const img = screen.queryByAltText("Test Dish");
+    expect(img).toBeNull();
   });
 });

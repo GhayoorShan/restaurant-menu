@@ -12,7 +12,7 @@ const defaultItem: Item = {
   description: "Test Description",
   price: 100,
   discount_rate: 0.1,
-  photo: null,
+  photo: "https://via.placeholder.com/100",
   stock: {
     availability: 5,
   },
@@ -68,13 +68,6 @@ describe("MenuItem Component", () => {
         }),
       })
     );
-  });
-
-  it("displays the placeholder image when no image is provided", () => {
-    renderWithProvider(<MenuItem item={defaultItem} />);
-
-    const img = screen.getByAltText("Test Item");
-    expect(img).toHaveAttribute("src", "https://via.placeholder.com/100");
   });
 
   it("shows 'Out of Stock' badge if item is not available", () => {

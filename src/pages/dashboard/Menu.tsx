@@ -29,7 +29,7 @@ const Menu: React.FC = () => {
   //   if (error) return <p>Failed to fetch menu</p>;
 
   return (
-    <div className="px-5 py-12">
+    <div className="px-5 py-12 max-w-96">
       <div className="flex flex-col items-start gap-2">
         <Button icon={<GoArrowLeft size={"35px"} />} onClick={handleReset} />
         <div className="text-[26px] font-semibold">Search</div>

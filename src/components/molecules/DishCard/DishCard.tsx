@@ -36,7 +36,7 @@ const DishCard: React.FC<DishCardProps> = ({
         <div className="flex gap-4 text-sm">
           {discountPrice ? (
             <>
-              <p>
+              <p className="font-semibold">
                 {CURRENCY} {price - price * discountPrice}
               </p>
               <p className="text-muted line-through">
@@ -50,11 +50,7 @@ const DishCard: React.FC<DishCardProps> = ({
           )}
         </div>
       </div>
-      <img
-        src={image ?? "https://via.placeholder.com/100"}
-        alt={name}
-        className="w-24 h-24 rounded-md"
-      />
+      {image && <img src={image} alt={name} className="w-24 h-24 rounded-md" />}
       {isOutOfStock && (
         <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold py-1 px-2 rounded-md shadow-lg">
           Out of Stock
