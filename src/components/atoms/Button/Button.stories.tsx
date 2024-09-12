@@ -12,6 +12,7 @@ export default {
   },
 } as Meta<typeof Button>;
 
+// eslint-disable-next-line react/function-component-definition, react/jsx-props-no-spreading
 const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
 
 export const Default = Template.bind({});

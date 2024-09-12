@@ -19,6 +19,7 @@ const defaultItem: Item = {
   category_id: "",
 };
 
+// eslint-disable-next-line no-undef
 const renderWithProvider = (component: JSX.Element) => {
   return render(<Provider store={store}>{component}</Provider>);
 };

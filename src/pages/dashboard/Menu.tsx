@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
   return (
     <div className="px-5 py-12 max-w-96">
       <div className="flex flex-col items-start gap-2">
-        <Button icon={<GoArrowLeft size={"35px"} />} onClick={handleReset} />
+        <Button icon={<GoArrowLeft size="35px" />} onClick={handleReset} />
         <div className="text-[26px] font-semibold">Search</div>
         <SearchField query={searchQuery} onSearch={setSearchQuery} />
       </div>
@@ -47,7 +47,9 @@ const Menu: React.FC = () => {
             return (
               categoryItems.length > 0 && (
                 <div key={category.id} className="my-4">
-                  <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
+                  <h2 className="text-[26px] font-bold mb-4">
+                    {category.name}
+                  </h2>
                   {categoryItems.map((item) => (
                     <MenuItem key={item.id} item={item} />
                   ))}
