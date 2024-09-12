@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useMemo,
-  useCallback,
-  Suspense,
-  useEffect,
-} from "react";
+import React, { useState, useMemo, useCallback, Suspense } from "react";
 import useFetch from "../../hooks/useFetch";
 import { MenuData } from "../../utils/types";
 import Button from "../../components/atoms/Button/Button";
@@ -21,7 +15,7 @@ const MenuItem = React.lazy(
 );
 
 const Menu: React.FC = () => {
-  const { data: menuData, error, loading } = useFetch<MenuData>(MENU_API_URL);
+  const { data: menuData, error } = useFetch<MenuData>(MENU_API_URL);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const debouncedQuery = useDebounce(searchQuery, 500);
   const dispatch = useDispatch();
