@@ -25,8 +25,8 @@ const Menu: React.FC = () => {
   const handleReset = async () => {
     dispatch(clearBasket());
   };
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Failed to fetch menu</p>;
+  //   if (loading) return <p>Loading...</p>;
+  //   if (error) return <p>Failed to fetch menu</p>;
 
   return (
     <div className="px-5 py-12">

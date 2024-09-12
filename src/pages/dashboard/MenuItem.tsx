@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { addToBasket } from "../../redux/features/basket/basketSlice";
 import useTruncate from "../../hooks/useTruncate";
+import { TRUNCATE_LIMIT } from "../../utils/constants";
 
 interface ItemCardProps {
   item: Item;
@@ -58,18 +59,16 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
   };
 
   return (
-    <div>
-      <DishCard
-        name={item.name}
-        price={item.price}
-        discountPrice={item.discount_rate}
-        onAddToBasket={handleAddToBasket}
-        image={item.photo || null}
-        description={useTruncate(item.description, 100)}
-        isOutOfStock={isOutOfStock}
-        currentQuantity={basketItem?.currentQuantity ?? 0}
-      />
-    </div>
+    <DishCard
+      name={item.name}
+      price={item.price}
+      discountPrice={item.discount_rate}
+      onAddToBasket={handleAddToBasket}
+      image={item.photo || null}
+      description={useTruncate(item.description, TRUNCATE_LIMIT)}
+      isOutOfStock={isOutOfStock}
+      currentQuantity={basketItem?.currentQuantity ?? 0}
+    />
   );
 };
 
