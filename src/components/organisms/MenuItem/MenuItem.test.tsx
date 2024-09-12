@@ -2,9 +2,9 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 import MenuItem from "./MenuItem";
 import { Provider } from "react-redux";
-import { store } from "../../redux/store";
-import { Item } from "../../utils/types";
-import { CURRENCY } from "../../utils/constants";
+import { store } from "../../../redux/store";
+import { Item } from "../../../utils/types";
+import { CURRENCY } from "../../../utils/constants";
 
 // Helper function to render the component with Redux Provider
 // eslint-disable-next-line no-undef

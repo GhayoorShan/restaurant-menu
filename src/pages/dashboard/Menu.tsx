@@ -1,16 +1,24 @@
-import React, { useState, useMemo, useCallback, Suspense } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  Suspense,
+  useEffect,
+} from "react";
 import useFetch from "../../hooks/useFetch";
 import { MenuData } from "../../utils/types";
-import { MENU_API_URL } from "../../utils/constants";
 import Button from "../../components/atoms/Button/Button";
 import SearchField from "../../components/atoms/Search/SearchField";
 import { GoArrowLeft } from "react-icons/go";
 import useDebounce from "../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
 import { clearBasket } from "../../redux/features/basket/basketSlice";
-
+import ErrorBoundary from "../../components/organisms/ErrorBoundary";
+const MENU_API_URL = import.meta.env.VITE_API_BASE_URL;
 // Lazy load MenuItem component
-const MenuItem = React.lazy(() => import("./MenuItem"));
+const MenuItem = React.lazy(
+  () => import("../../components/organisms/MenuItem/MenuItem")
+);
 
 const Menu: React.FC = () => {
   const { data: menuData, error, loading } = useFetch<MenuData>(MENU_API_URL);
@@ -34,8 +42,8 @@ const Menu: React.FC = () => {
     dispatch(clearBasket());
   }, [dispatch]);
 
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>Failed to fetch menu</p>;
+  // if (loading) return <p>Loading...</p>;
+  if (error) return <p>Failed to fetch menu</p>;
 
   return (
     <div className="px-5 py-12 max-w-96">
@@ -44,8 +52,8 @@ const Menu: React.FC = () => {
         <div className="text-[26px] font-semibold">Search</div>
         <SearchField query={searchQuery} onSearch={setSearchQuery} />
       </div>
-      <Suspense fallback={<div>Loading items...</div>}>
-        <div>
+      <ErrorBoundary>
+        <Suspense fallback={<div>Loading items...</div>}>
           {categories.map((category) => {
             const categoryItems = filteredItems.filter(
               (item) => item.category_id === category.id
@@ -63,8 +71,8 @@ const Menu: React.FC = () => {
               )
             );
           })}
-        </div>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };

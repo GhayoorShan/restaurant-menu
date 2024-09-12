@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import DishCard from "../../components/molecules/DishCard/DishCard";
-import { Item } from "../../utils/types";
+import DishCard from "../../molecules/DishCard/DishCard";
+import { Item } from "../../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { addToBasket } from "../../redux/features/basket/basketSlice";
-import useTruncate from "../../hooks/useTruncate";
-import { TRUNCATE_LIMIT } from "../../utils/constants";
+import { RootState } from "../../../redux/store";
+import { addToBasket } from "../../../redux/features/basket/basketSlice";
+import useTruncate from "../../../hooks/useTruncate";
+import { TRUNCATE_LIMIT } from "../../../utils/constants";
 
 interface ItemCardProps {
   item: Item;
