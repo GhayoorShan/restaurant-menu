@@ -7,6 +7,7 @@ import { configDefaults } from "vitest/config";
 import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
+  base: "/restaurant-menu/",
   plugins: [react()],
   test: {
     globals: true, // Enables global test functions like `describe`, `it`, and `expect`
