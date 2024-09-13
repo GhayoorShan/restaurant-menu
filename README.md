@@ -4,7 +4,7 @@
 
 This is a **Restaurant Menu** project built using **React** and **Vite**. The project incorporates state management with **Redux**, uses **TailwindCSS** for styling, and leverages **Storybook** for component development. It also includes **TypeScript**, **ESLint**, and **Prettier** for code quality and formatting.
 
-The menu data is hosted on [GitHub Gist](https://gist.githubusercontent.com/GhayoorShan/e9b444362761dfd1858a9599054ec242/raw/b6c4cf11516aa060faed84457e0036cf8a319e6a/gistfile1.json), and this project fetches the menu dynamically to display it.
+The menu data is hosted on GitHub Gist, and this project fetches the menu dynamically to display it.
 
 ## Features
 
@@ -29,11 +29,13 @@ Before running or building the project, make sure you have the following tools i
 1. **Clone the repository**:
 
 git clone https://github.com/GhayoorShan/restaurant-menu
+
 cd restaurant-menu
 
 2. **Install dependencies**:
 
 Install all necessary dependencies using npm:
+
 npm install
 
 ## Running the Project
@@ -41,17 +43,21 @@ npm install
 1. **Start the development server**:
 
 To run the project locally with hot-reloading, use:
+
 npm run dev
+
 This will start a local server at http://localhost:3000/, where you can view the application.
 
 2. **Preview the production build**:
 
 If you want to preview the production version of the application, use:
+
 npm run preview
 
 ## Building the Project
 
 To build the project for production, run:
+
 npm run build
 
 ## Deploying to GitHub Pages
@@ -61,17 +67,21 @@ This project is set up to be deployed to GitHub Pages using the gh-pages package
 **Deploy the project**:
 
 To deploy the project to GitHub Pages, run:
+
 npm run deploy
 
 This will push the contents of the dist folder to the gh-pages branch and publish your site at:
+
 https://<your-github-username>.github.io/restaurant-menu
 
 ## Running Tests
 
 This project uses Vitest for unit testing. To run the tests:
+
 npm run test
 
 To run the Vitest UI for a more interactive testing experience:
+
 npm run test:ui
 
 ## Storybook
@@ -81,7 +91,9 @@ This project uses Storybook for component development in isolation.
 **Run Storybook**:
 
 To start Storybook locally:
+
 npm run storybook
+
 This will start Storybook at http://localhost:6006/, where you can interact with your components.
 
 ## Linting and Formatting
@@ -89,6 +101,7 @@ This will start Storybook at http://localhost:6006/, where you can interact with
 **Run ESLint**:
 
 To lint your code and check for potential issues, run:
+
 npm run lint
 
 ## Environment Variables
