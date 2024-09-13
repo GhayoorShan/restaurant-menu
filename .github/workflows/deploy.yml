@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/**" # Deploy only if files in the src directory change
+      - "dist/**"
+      - "package.json"
+      - "vite.config.ts"
 jobs:
   deploy:
     runs-on: ubuntu-latest
