@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import DishCard from "../../molecules/DishCard/DishCard";
+import DishCard from "../../molecules/DishCard";
 import { Item } from "../../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";

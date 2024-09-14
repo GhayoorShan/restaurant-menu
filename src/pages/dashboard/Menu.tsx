@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useCallback, Suspense } from "react";
 import useFetch from "../../hooks/useFetch";
 import { MenuData } from "../../utils/types";
-import Button from "../../components/atoms/Button/Button";
-import SearchField from "../../components/atoms/Search/SearchField";
+import Button from "../../components/atoms/Button/";
+import SearchField from "../../components/atoms/Search";
 import { GoArrowLeft } from "react-icons/go";
 import useDebounce from "../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import ErrorBoundary from "../../components/organisms/ErrorBoundary";
 const MENU_API_URL = import.meta.env.VITE_API_BASE_URL;
 // Lazy load MenuItem component
 const MenuItem = React.lazy(
-  () => import("../../components/organisms/MenuItem/MenuItem")
+  () => import("../../components/organisms/MenuItem")
 );
 
 const Menu: React.FC = () => {
