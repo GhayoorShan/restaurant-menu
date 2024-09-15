@@ -8,35 +8,38 @@ import useDebounce from "../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
 import { clearBasket } from "../../redux/features/basket/basketSlice";
 import ErrorBoundary from "../../components/organisms/ErrorBoundary";
+
 const MENU_API_URL = import.meta.env.VITE_API_BASE_URL;
-// Lazy load MenuItem component
-const MenuItem = React.lazy(
-  () => import("../../components/organisms/MenuItem")
-);
+import MenuItemComponent from "../../components/organisms/MenuItem"; // Synchronous import
+
+// eslint-disable-next-line no-undef
+const isProduction = process.env.NODE_ENV === "production";
+
+// Conditionally use React.lazy in production
+const MenuItem = isProduction
+  ? React.lazy(() => import("../../components/organisms/MenuItem"))
+  : MenuItemComponent;
 
 const Menu: React.FC = () => {
-  const { data: menuData, error } = useFetch<MenuData>(MENU_API_URL);
+  const { data: menuData, error, loading } = useFetch<MenuData>(MENU_API_URL);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const debouncedQuery = useDebounce(searchQuery, 500);
+  const debouncedQuery = useDebounce(searchQuery, 500) || ""; // Ensure it's a string
   const dispatch = useDispatch();
 
   const { items = [], categories = [] } = menuData || {};
 
-  // Memoizing the filteredItems array to avoid recalculating on every render
-  const filteredItems = useMemo(
-    () =>
-      items.filter((item) =>
-        item.name.toLowerCase().includes(debouncedQuery.toLowerCase())
-      ),
-    [debouncedQuery, items]
-  );
+  const filteredItems = useMemo(() => {
+    const query = typeof debouncedQuery === "string" ? debouncedQuery : "";
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [debouncedQuery, items]);
 
-  // Memoizing the handleReset
   const handleReset = useCallback(() => {
     dispatch(clearBasket());
   }, [dispatch]);
 
-  // if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Failed to fetch menu</p>;
 
   return (

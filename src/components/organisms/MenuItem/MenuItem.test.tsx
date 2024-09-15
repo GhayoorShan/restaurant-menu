@@ -1,17 +1,19 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
 import { vi } from "vitest";
 import MenuItem from "./MenuItem";
 import { Provider } from "react-redux";
-import { store } from "../../../redux/store";
+import { store, persistor } from "../../../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import { Item } from "../../../utils/types";
 import { CURRENCY } from "../../../utils/constants";
 
-// Helper function to render the component with Redux Provider
-// eslint-disable-next-line no-undef
-const renderWithProvider = (component: JSX.Element) => {
-  return render(<Provider store={store}>{component}</Provider>);
-};
-
+// Mock item for tests
 const defaultItem: Item = {
   id: "1",
   name: "Test Item",
@@ -25,9 +27,21 @@ const defaultItem: Item = {
   category_id: "",
 };
 
+// Helper function to render the component with Redux and Redux Persist providers
+// eslint-disable-next-line no-undef
+const renderWithPersist = (component: JSX.Element) => {
+  return render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {component}
+      </PersistGate>
+    </Provider>
+  );
+};
+
 describe("MenuItem Component", () => {
   it("renders the item name, price, and description", () => {
-    renderWithProvider(<MenuItem item={defaultItem} />);
+    renderWithPersist(<MenuItem item={defaultItem} />);
 
     // Check if item name and description are rendered
     expect(screen.getByText("Test Item")).toBeInTheDocument();
@@ -48,7 +62,7 @@ describe("MenuItem Component", () => {
 
   it("does not show discount price if not provided", () => {
     const noDiscountItem = { ...defaultItem, discount_rate: 0 };
-    renderWithProvider(<MenuItem item={noDiscountItem} />);
+    renderWithPersist(<MenuItem item={noDiscountItem} />);
 
     // Find the regular price
     const regularPriceElement = screen.getByText("100");
@@ -63,7 +77,7 @@ describe("MenuItem Component", () => {
     const mockAddToBasket = vi.fn();
     store.dispatch = mockAddToBasket;
 
-    renderWithProvider(<MenuItem item={defaultItem} />);
+    renderWithPersist(<MenuItem item={defaultItem} />);
 
     // Simulate clicking the card
     fireEvent.click(screen.getByText("Test Item"));
@@ -85,9 +99,38 @@ describe("MenuItem Component", () => {
 
   it("shows 'Out of Stock' badge if item is not available", () => {
     const outOfStockItem = { ...defaultItem, stock: { availability: 0 } };
-    renderWithProvider(<MenuItem item={outOfStockItem} />);
+    renderWithPersist(<MenuItem item={outOfStockItem} />);
 
     // Check if 'Out of Stock' badge is displayed
     expect(screen.getByText("Out of Stock")).toBeInTheDocument();
+  });
+});
+
+// Additional tests for Redux Persist integration and basket manipulation
+
+describe("Basket persistence tests", () => {
+  it("persists item in basket after reload", async () => {
+    renderWithPersist(<MenuItem item={defaultItem} />);
+
+    // Add the item to the basket
+    fireEvent.click(screen.getByText(/Test Item/i));
+
+    // Wait for the item to appear
+    await waitFor(() => {
+      const items = screen.getAllByText(/Test Item/i);
+      expect(items.length).toBeGreaterThan(0);
+    });
+
+    // Simulate a page reload
+    // act is a test helper to apply pending React updates before making assertions.
+    await act(async () => {
+      renderWithPersist(<MenuItem item={defaultItem} />);
+    });
+
+    // Ensure the item is still in the basket after reload
+    await waitFor(() => {
+      const items = screen.getAllByText(/Test Item/i);
+      expect(items.length).toBeGreaterThan(0);
+    });
   });
 });
