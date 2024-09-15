@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import DishCard from "../../molecules/DishCard";
 import { Item } from "../../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,31 +15,24 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
   const dispatch = useDispatch();
   const basketItems = useSelector((state: RootState) => state.basket.items);
 
-  // Memoizing basketItem lookup
-  const basketItem = useMemo(
-    () => basketItems.find((basketItem) => basketItem.id === item.id),
-    [basketItems, item.id]
+  // Finding the corresponding basket item
+  const basketItem = basketItems.find(
+    (basketItem) => basketItem.id === item.id
   );
 
-  // Memoizing the initial available quantity
-  const initialAvailableQuantity = useMemo(
-    () => basketItem?.availableQuantity ?? item?.stock?.availability ?? 0,
-    [basketItem, item?.stock?.availability]
-  );
+  // Initial availability
+  const initialAvailability =
+    basketItem?.availableQuantity ?? item.stock?.availability ?? 0;
 
-  const [availability, setAvailability] = useState<number>(
-    initialAvailableQuantity
-  );
-  const [isOutOfStock, setIsOutOfStock] = useState<boolean>(availability <= 0);
+  const [availability, setAvailability] = useState<number>(initialAvailability);
 
   useEffect(() => {
-    setAvailability(initialAvailableQuantity);
-    setIsOutOfStock(initialAvailableQuantity <= 0);
-  }, [initialAvailableQuantity]);
+    setAvailability(initialAvailability);
+  }, [initialAvailability]);
 
-  // Memoizing the add to basket function
-  const handleAddToBasket = useCallback(() => {
-    // Dispatch action to add item to basket
+  const isOutOfStock = availability <= 0;
+
+  const handleAddToBasket = () => {
     if (availability > 0) {
       dispatch(
         addToBasket({
@@ -47,21 +40,13 @@ const MenuItem: React.FC<ItemCardProps> = ({ item }) => {
           name: item.name,
           price: item.price - item.price * item.discount_rate,
           currentQuantity: 1,
-          maxQuantity: item?.stock?.availability ?? 0,
+          maxQuantity: item.stock?.availability ?? 0,
           availableQuantity: availability - 1,
         })
       );
-
-      // Update local availability state
-      setAvailability((prevAvailability) => {
-        const newAvailability = prevAvailability - 1;
-        if (newAvailability <= 0) {
-          setIsOutOfStock(true);
-        }
-        return newAvailability;
-      });
+      setAvailability(availability - 1);
     }
-  }, [dispatch, availability, item]);
+  };
 
   return (
     <DishCard
